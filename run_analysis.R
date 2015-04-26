@@ -10,6 +10,9 @@ cleanup_feature_name <- function(feature_name) {
         feature_name <- gsub('([a-z])([A-Z])', '\\1 \\2', feature_name)
         feature_name <- gsub('([Mm])ag', '\\1agnitude', feature_name)
         feature_name <- gsub('([Aa])cc?', '\\1cceleration', feature_name)
+        feature_name <- gsub('(.*)(mean|std)(.*)', '\\1\\3 \\2', feature_name)
+        feature_name <- gsub('-', '', feature_name)
+        feature_name <- gsub('([XYZ])axis', '\\1-axis', feature_name)
         return(feature_name)
 }
 

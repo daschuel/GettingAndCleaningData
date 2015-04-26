@@ -1,7 +1,13 @@
-# GettingAndCleaningData
+# Read-Me File for Cleaned UCI HAR Dataset
+# Final Project for Getting and Cleaning Data
+# David Schueler
+# 4/26/2015
+
 This repo contains a cleaned and pruned version of the Human Activity Recognition Using Smartphones Dataset, citation below.
 
 The file means_by_subject_and_activity.txt contains the mean of each subject, activity, and variable combination; see CodeBook.md for details.
+
+The file can be read using read.table() in R with header set to TRUE.
 
 The script run_analysis.R produces this file from the initial data downloaded from the below link. The archive must be unzipped, and the R script must be placed in the top subdirectory of the folder resulting from the unzip. That is, the path should be:
 
