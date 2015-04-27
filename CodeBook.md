@@ -1,7 +1,7 @@
 # Code Book for Cleaned UCI HAR Dataset
-# Final Project for Getting and Cleaning Data
-# David Schueler
-# 4/26/2015
+## Final Project for Getting and Cleaning Data
+## David Schueler
+## 4/26/2015
 
 The variables used in the data set are as below.
 Subjects are numbered 1 to 30.
@@ -13,7 +13,7 @@ only the mean value for each pair of subject and activity
 (first two columns of the file means_by_subject_and_activity.txt)
  is reported.
 
-# The variables have 6 distinguishing features:
+## The variables have 6 distinguishing features:
 * Body vs. Gravity:
     * Those variables mentioning Gravity are measures of the force of gravity at
     a given time, while those mentioning Body measure the movement of the person's own body.
