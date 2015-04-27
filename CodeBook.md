@@ -15,23 +15,23 @@ only the mean value for each pair of subject and activity
 
 # The variables have 6 distinguishing features:
 * Body vs. Gravity:
-** Those variables mentioning Gravity are measures of the force of gravity at
+    * Those variables mentioning Gravity are measures of the force of gravity at
     a given time, while those mentioning Body measure the movement of the person's own body.
 * Acceleration vs. Gyro:
-** Those variables mentioning Acceleration were measured using the accelerometer,
+    * Those variables mentioning Acceleration were measured using the accelerometer,
     while those mentioning Gyro were measured using the gyroscope.
 * Jerk vs. absence:
-** Those variables mentioning Jerk represent further calculations on those without
+    * Those variables mentioning Jerk represent further calculations on those without
     to calculate Jerk signals.
 * Magnitude vs. X, Y, or Z axis:
-** Those variables mentioning Magnitude result from calculating the Euclidean norm of the
+    * Those variables mentioning Magnitude result from calculating the Euclidean norm of the
     three dimensional axes (see below)>
-** Those variables mentioning X-, Y-, or Z-axis represent motion in one of those three dimensions.
+    * Those variables mentioning X-, Y-, or Z-axis represent motion in one of those three dimensions.
 * FFT vs. absence:
-** Those variables mentioning FFT were derived from the application of a Fast-Fourier Transform
+    * Those variables mentioning FFT were derived from the application of a Fast-Fourier Transform
     of the respective alternate variables.
 * Mean vs. std
-** As discussed, only the mean and standard deviation (std) for each variable were reported.
+    * As discussed, only the mean and standard deviation (std) for each variable were reported.
 
 
 
