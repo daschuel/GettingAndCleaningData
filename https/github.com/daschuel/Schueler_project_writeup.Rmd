@@ -1,0 +1,68 @@
+David Schueler
+Course Project: Practical Machine Learning 2015
+<center> <h1>Human Activity Recognition</h1> </center>
+
+```{r knitr_options, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.width=12, fig.height=4, fig.path='RmdFigs/',
+               warning=FALSE, message=FALSE)
+set.seed(53079239)
+# install R/qtl package if necessary:
+if(!require("qtl")) install.packages("qtl", repos="http://cran.us.r-project.org")
+library(caret)
+```
+
+# Overview
+
+In this project we investigate the Human Activity Recognition (HAR) dataset, and try to build a prediction model to accurately predict which activity a given subject was doing (the "classe" variable in the dataset) using a subset of the other available data.
+
+We end up using a support vector machine (SVM) with a linear kernel, trained on a manually selected set of data. This leaves us with 57 variables to predict with out of a total of 159 available, but this turns out to be sufficient to achieve an extremely high accuracy, of effectively 1.
+
+# Initial Development Setup
+
+The project provides us with a training set and a test set. However, for development purposes, we do not touch the true test set for now, instead splitting the given training set into a training and a development set.
+
+
+```{r train_setup, include=TRUE}
+if(!exists("pml_train")){pml_train <- read.csv('pml-training.csv')}
+inTrain <- createDataPartition(y=pml_train$classe, p=.6, list=FALSE)
+
+training <- pml_train[inTrain,]
+dev <- pml_train[-inTrain,]
+```
+
+# Initial Model Training
+
+We are now ready to train an initial model for development purposes. (If this were a full writeup of the development procedure we would show the attempt with several different machine learning algorithms, but for reasons of space we will here only include the one that works best.) We train an SVM algorithm with a linear kernel on our newly constructed reduced data frame, and display the results.
+
+```{r training_initial, include=TRUE}
+
+if(!exists("modFit")){modFit <- train(classe ~ magnet_forearm_z + magnet_forearm_y + magnet_forearm_x + accel_forearm_z + accel_forearm_y + accel_forearm_x + gyros_forearm_z + gyros_forearm_y + gyros_forearm_x + total_accel_forearm + gyros_belt_x + gyros_belt_y + gyros_belt_z + accel_belt_x + accel_belt_y + accel_belt_z + magnet_belt_x + magnet_belt_y + magnet_belt_z + roll_arm + pitch_arm + yaw_arm + total_accel_arm + gyros_arm_x + gyros_arm_y + gyros_arm_z + accel_arm_x + accel_arm_y + accel_arm_z + roll_dumbbell + pitch_dumbbell + yaw_dumbbell + gyros_dumbbell_z + accel_dumbbell_x + accel_dumbbell_y + accel_dumbbell_z + magnet_dumbbell_x + magnet_dumbbell_y + magnet_dumbbell_z + roll_forearm + pitch_forearm + yaw_forearm, method = "svmLinear", data=training)}
+
+print(modFit)
+```
+
+# Initial Model Testing
+
+The training-internal accuracy of `r (modFit$results)$Accuracy` seems promising. We now test the model on our development set.
+
+```{r testing_initial, include=TRUE}
+if(!exists("pred")){pred <- predict(modFit, newdata=dev)}
+conf <- confusionMatrix(pred, dev$classe)
+print(conf)
+```
+
+We now achieve an accuracy of `r (conf$overall)['Accuracy']`, for an estimated out-of-sample error of `r 1 - (conf$overall)['Accuracy']`.
+
+# Final Model Testing
+
+Finally, we retrain the model on the entire training set, and investigate the predictions.
+
+```{r training_testing_final, include=TRUE}
+training2 <- pml_train
+testing <- read.csv('pml-testing.csv')
+if(!exists("modFit2")){modFit2 <- train(classe ~ magnet_forearm_z + magnet_forearm_y + magnet_forearm_x + accel_forearm_z + accel_forearm_y + accel_forearm_x + gyros_forearm_z + gyros_forearm_y + gyros_forearm_x + total_accel_forearm + gyros_belt_x + gyros_belt_y + gyros_belt_z + accel_belt_x + accel_belt_y + accel_belt_z + magnet_belt_x + magnet_belt_y + magnet_belt_z + roll_arm + pitch_arm + yaw_arm + total_accel_arm + gyros_arm_x + gyros_arm_y + gyros_arm_z + accel_arm_x + accel_arm_y + accel_arm_z + roll_dumbbell + pitch_dumbbell + yaw_dumbbell + gyros_dumbbell_z + accel_dumbbell_x + accel_dumbbell_y + accel_dumbbell_z + magnet_dumbbell_x + magnet_dumbbell_y + magnet_dumbbell_z + roll_forearm + pitch_forearm + yaw_forearm, method = "svmLinear", data=training2)}
+if(!exists("pred2")){pred2 <- predict(modFit2, newdata=testing)}
+print(pred2)
+```
+
